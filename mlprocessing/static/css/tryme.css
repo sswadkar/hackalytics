@@ -1,0 +1,48 @@
+#dosomething{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.data{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 1000px;
+}
+
+.break{
+    background-color: aliceblue;
+    height: 10vh;
+}
+.break2{
+    background-color: white;
+    height: 5vh;
+}
+.break3{
+    background-color: white;
+    height: 5vh;
+}
+#secondrow{
+    display: flex;
+    justify-content: center;
+    size: 10%;
+}
+.break4{
+    height: 10vh;
+}
+.cool-yes {
+    padding: 10px 20px;
+    border-radius: 20px; /* Rounded corners */
+    display: inline-block;
+    margin-bottom: 0px; /* Add margin below the "Yes" text */
+}
+.result-container {
+    display: flex;
+    justify-content: space-between; /* Ensure single line and space between items */
+    padding: 10px; /* Add padding to the container */
+}
+
+.result-box {
+    flex: 1;
+    padding: 10px;
+}
