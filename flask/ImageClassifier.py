@@ -21,13 +21,17 @@ class ImageClassifier:
         "teddy bear", "hair drier", "toothbrush"
     ]
 
-    def __init__(self, model_path: str):
+    def __init__(self):
+        #self.classifier = torch.hub.load('ultralytics/yolov5', 'custom', path="/Users/swadkar/gatech/hackalytics/flask/yolov5/runs/train/exp/weights/best.pt", force_reload=True)
+        #self.classifier.eval()
         self.classifier = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
 
     def runDetection(self, frame):
+
         # convert cv2 frame to tensor frame
 
+        #frame_resized = frame
         frame_resized = cv2.resize(frame, (640, 640))  # Replace with expected dimensions
 
         tensor = transforms.ToTensor()(cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB))[None, ...]
@@ -38,7 +42,7 @@ class ImageClassifier:
 
         # Define thresholds
         conf_threshold = 0.5
-        nms_threshold = 0.4
+        nms_threshold = 0.6
 
         # Separate components of the output
         boxes = output[:, :4]  # Bounding box coordinates
@@ -74,7 +78,10 @@ class ImageClassifier:
         # final_boxes, final_scores, and final_classes now contain your filtered, scored, and suppressed detections
         
     
-        height, width, _ = frame_resized.shape
+        height, width, _ = frame.shape
+        height_r, width_r, _ = frame_resized.shape
+
+        print(height, width)
 
         # Iterate over the detections
         for i in range(len(final_boxes)):
@@ -100,4 +107,31 @@ class ImageClassifier:
             frame_resized = cv2.putText(frame_resized, label, (x_min, y_min - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, color, 2)
         
         return frame_resized
+        #return cv2.resize(frame_resized, (width, height))
 
+i = ImageClassifier()
+
+vid = cv2.VideoCapture(0) 
+  
+while(True): 
+      
+    # Capture the video frame 
+    # by frame 
+    ret, frame = vid.read() 
+
+    a = i.runDetection(frame)
+  
+    # Display the resulting frame 
+    print(a.shape)
+    cv2.imshow('frame', a) 
+      
+    # the 'q' button is set as the 
+    # quitting button you may use any 
+    # desired button of your choice 
+    if cv2.waitKey(1) & 0xFF == ord('q'): 
+        break
+  
+# After the loop release the cap object 
+vid.release() 
+# Destroy all the windows 
+cv2.destroyAllWindows() 

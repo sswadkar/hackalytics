@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/tryme.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        #video {
+         transform: rotateY(180deg);
+         -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+         -moz-transform:rotateY(180deg); /* Firefox */
+   
+        }
+       </style>
+    <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src = "{{ url_for('static',filename='script.js') }}"></script>
+</head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#!">FLAME AI</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="./solution.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="./features.html">Product</a></li>
+                <li class="nav-item"><a class="nav-link" href="./aboutus.html">About</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<body>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <div id="container" style="display: none;">
+                        <video autoplay playsinline id="videoElement"></video>
+                        <canvas id="canvas" width="400" height="300"></canvas>
+                      </div>
+                    <div class= 'video col-xl-5 col-xxl-6 d-none d-xl-block text-center'>
+                        <img class="rounded-3" id="photo" width="700" height="500">
+                      </div>
+                    <!-- Removed the counter input element -->
+                    <div class="d-flex mt-3" id="dosomething">
+                        <!-- Input element removed -->
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            Camera 1
+                        </button>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            Camera 2
+                        </button>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            Camera 3
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6 data">
+                    <h5 class="display fw-bolder">Number of People</h5>
+                    <p class="lead">10</p>
+                    <h5 class="display fw-bolder">Confidence</h5>
+                    <p class="lead">100</p>
+                    <h5 class="display fw-bolder">Fire Detection</h5>
+                    <p class="lead">Yes</p>
+                    <h5 class="display fw-bolder">Smoke Detection</h5>
+                    <p class="lead">No</p>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class = "break">
+
+    </div>
+    <div class="break2">
+
+    </div>
+    <section id="about">
+        <div class="container px-4">
+            <div class="row gx-4">
+                <div class="col-lg-6">
+                    <h2>About this Model</h2>
+                    <p class="lead">The logistic regression model, implemented using scikit-learn in Python, serves as a classification algorithm to predict the likelihood of a fire occurrence based on various environmental parameters. The process involves several key steps : </p>
+                    <ul>
+                        <li>Importing Libraries: We begin by importing necessary libraries, including train_test_split, LogisticRegression, and accuracy_score from scikit-learn.</li>
+                        <li>Loading the Dataset: Our dataset comprises parameters such as temperature, humidity, volatile organic compounds (VOC), carbon dioxide (CO2), hydrogen, and pressure, alongside the target variable indicating fire presence.</li>
+                        <li>Splitting the Dataset: The dataset is split into features (X) containing independent variables and the target variable (y) representing fire occurrence.</li>
+                        <li>Splitting into Training and Testing Sets: We further divide the dataset into training and testing sets using train_test_split to assess model performance.</li>
+                        <li>Initializing the Model: A logistic regression model is initialized using the LogisticRegression class, tailored for categorical prediction tasks like fire detection.</li>
+                        <li>Training the Model: The model is trained on the training set, learning relationships between input features and fire presence through parameter adjustment.</li>
+                        <li>Making Predictions: Utilizing the trained model, predictions on fire occurrence are made for the testing set using the predict method.</li>
+                        <li>Evaluating the Model: Model performance is evaluated by comparing predicted fire occurrences with actual labels in the testing set, quantified using the accuracy score to gauge classification accuracy. Through these iterative steps, the logistic regression model provides actionable insights for fire detection and prevention efforts based on environmental factors.</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row gx-4">
+                        <div class="col-12 mb-4">
+                            <img src="{{ url_for('static',filename='./images/confusion_matrix.png') }}" class="" alt="Big Image" height="400px" width="520px">
+                        </div>
+                        <div class="col-6">
+                            <img src="{{ url_for('static',filename='./images/precision_recall.png') }}" class="" alt="Small Image 1" height="250px" width="250px">
+                        </div>
+                        <div class="col-6">
+                            <img src="{{ url_for('static',filename='./images/true_false_positives.png') }}" class="" alt="Small Image 2" height="250px" width="250px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="break3">
+
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Temperature</h4>
+                        <input type="text" id="temperature" class="form-control" placeholder="Celcius">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Humidity</h4>
+                        <input type="text" id="humidity" class="form-control" placeholder="%">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Volatile Organic Compounds</h4>
+                        <input type="text" id="VOC" class="form-control" placeholder="Parts Per Billion">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Carbon Dioxide</h4>
+                        <input type="text" id="CO2" class="form-control" placeholder="Parts Per Million">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Air Pressure</h4>
+                        <input type="text" id="pressure" class="form-control" placeholder="HectoPascal">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Hydrogen</h4>
+                        <input type="text" id="hydrogen" class="form-control" placeholder="Parts Per Million">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container px-4">
+        <!-- Container to enclose button and text -->
+        <div class="result-container text-center mt-5 border">
+            <!-- Button to run the main backend program -->
+            <button type="button" class="btn btn-primary btn-lg border border-primary" onclick="generateResult()">Generate</button>
+            
+            <!-- Display the result -->
+            <div id="result" class="result-box">
+                <p class="cool-yes" style="color: black; font-weight: bold; font-size: 25pt;">Likelihood of Fire, Take Precaution</p> <!-- Updated result text -->
+            </div>
+        </div>
+    </div>
+    <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="./solution.html" class="nav-link px-2 text-body-secondary">Home</a></li>
+          <li class="nav-item"><a href="./features.html" class="nav-link px-2 text-body-secondary">Product</a></li>
+          <li class="nav-item"><a href="./aboutus.html" class="nav-link px-2 text-body-secondary">About</a></li>
+          <li class="nav-item"><a href="./tryme.html" class="nav-link px-2 text-body-secondary">AI MODEL</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">© 2023 Flame AI, Inc</p>
+      </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

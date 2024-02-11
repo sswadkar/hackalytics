@@ -4,10 +4,14 @@ var socket = io.connect(
   socket.on("connect", function () {
     console.log("Connected...!", socket.connected);
   });
+  var canvas;
+  var context;
+  var video;
   
-  var canvas = document.getElementById("canvas");
-  var context = canvas.getContext("2d");
-  const video = document.querySelector("#videoElement");
+  window.addEventListener("DOMContentLoaded", (event) => {
+  canvas = document.getElementById("canvas");
+  context = canvas.getContext("2d");
+  video = document.querySelector("#videoElement");
   
   video.width = 400;
   video.height = 300;
@@ -23,8 +27,9 @@ var socket = io.connect(
       })
       .catch(function (err0r) {});
   }
+})
 
-const FPS = 2;
+const FPS = 30;
 setInterval(() => {
   width = video.width;
   height = video.height;
