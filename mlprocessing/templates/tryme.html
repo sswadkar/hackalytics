@@ -19,6 +19,64 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <script src = "{{ url_for('static',filename='script.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to make an AJAX GET request and update the field
+            function updateImageClassification() {
+                $.ajax({
+                    url: '/imageclassifier', // The URL to make the GET request
+                    type: 'GET', // Specify the request type
+                    dataType: 'json', // The type of data you're expecting back from the server
+                    success: function(response) {
+                        $('#numOfPeople').text(response.numOfPeople);
+                        $('#confidence').text(response.confidence);
+                        $('#fireDetect').text(response.detectedFire);
+                        $('#smokeDetect').text(response.detectedSmoke);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching image classification: ", error);
+                        $('#numOfPeople').text('Error fetching classification');
+                        $('#confidence').text('Error fetching classification');
+                        $('#fireDetect').text('Error fetching classification');
+                        $('#smokeDetect').text('Error fetching classification');
+                    }
+                });
+            }
+
+        
+            // Set the interval to update the classification every 5 seconds
+            setInterval(updateImageClassification, 1000); // 5000 milliseconds = 5 seconds
+        });
+
+        function postMLData(){
+                $.ajax({
+                    url: '/predict', // The URL to make the POST request
+                    type: 'POST', // Change the request type to POST
+                    dataType: 'json', // The type of data you're expecting back from the server
+                    data: {
+                        // Example data sent to the server; adjust according to your needs
+                        temperature: jQuery("#Temperature").val(),
+                        humidity: jQuery("#Humidity").val(),
+                        voc: jQuery("#VOC").val(),
+                        co2: jQuery("#CO2").val(),
+                        airhpa: jQuery("#pressure").val(),
+                        hydrogen: jQuery("#hydrogen").val(),
+                    },
+                    success: function(response) {
+
+                        if (response.output == 1){
+                            $('#mlout').text("Likelihood of fire, take precaution.");
+                        } else {
+                            $('#mlout').text("Unlikely there's a fire, all good!");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching prediction: ", error);
+                        $('#mlout').text('Error fetching prediction');
+                    }
+                }); 
+            }
+        </script>
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
@@ -28,7 +86,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="./solution.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="./features.html">Product</a></li>
-                <li class="nav-item"><a class="nav-link" href="./aboutus.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="./testai.html">Documentation</a></li>
             </ul>
         </div>
     </div>
@@ -64,13 +122,13 @@
                 </div>
                 <div class="col-md-6 data">
                     <h5 class="display fw-bolder">Number of People</h5>
-                    <p class="lead">10</p>
+                    <p id="numOfPeople" class="lead">10</p>
                     <h5 class="display fw-bolder">Confidence</h5>
-                    <p class="lead">100</p>
+                    <p id="confidence" class="lead">100</p>
                     <h5 class="display fw-bolder">Fire Detection</h5>
-                    <p class="lead">Yes</p>
+                    <p id="fireDetect" class="lead">Yes</p>
                     <h5 class="display fw-bolder">Smoke Detection</h5>
-                    <p class="lead">No</p>
+                    <p id="smokeDetect" class="lead">No</p>
 
                 </div>
             </div>
@@ -125,23 +183,23 @@
             <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h4 class="card-title">Temperature</h4>
-                        <input type="text" id="temperature" class="form-control" placeholder="Celcius">
+                        <h4 class="card-title">Temperature (Celsius)</h4>
+                        <input type="text" id="Temperature" class="form-control" placeholder="Celsius">
                     </div>
                 </div>
             </div>
             <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h4 class="card-title">Humidity</h4>
-                        <input type="text" id="humidity" class="form-control" placeholder="%">
+                        <h4 class="card-title">Humidity (%)</h4>
+                        <input type="text" id="Humidity" class="form-control" placeholder="%">
                     </div>
                 </div>
             </div>
             <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h4 class="card-title">Volatile Organic Compounds</h4>
+                        <h4 class="card-title">Volatile Organic Compounds (PPB)</h4>
                         <input type="text" id="VOC" class="form-control" placeholder="Parts Per Billion">
                     </div>
                 </div>
@@ -151,7 +209,7 @@
             <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h4 class="card-title">Carbon Dioxide</h4>
+                        <h4 class="card-title">Carbon Dioxide (PPM)</h4>
                         <input type="text" id="CO2" class="form-control" placeholder="Parts Per Million">
                     </div>
                 </div>
@@ -159,7 +217,7 @@
             <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h4 class="card-title">Air Pressure</h4>
+                        <h4 class="card-title">Air Pressure (HPA)</h4>
                         <input type="text" id="pressure" class="form-control" placeholder="HectoPascal">
                     </div>
                 </div>
@@ -167,7 +225,7 @@
             <div class="col-sm-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h4 class="card-title">Hydrogen</h4>
+                        <h4 class="card-title">Hydrogen (PPM)</h4>
                         <input type="text" id="hydrogen" class="form-control" placeholder="Parts Per Million">
                     </div>
                 </div>
@@ -178,22 +236,24 @@
         <!-- Container to enclose button and text -->
         <div class="result-container text-center mt-5 border">
             <!-- Button to run the main backend program -->
-            <button type="button" class="btn btn-primary btn-lg border border-primary" onclick="generateResult()">Generate</button>
+            <button type="button" class="btn btn-primary btn-lg border border-primary" onclick="postMLData()">Generate</button>
             
             <!-- Display the result -->
             <div id="result" class="result-box">
-                <p class="cool-yes" style="color: black; font-weight: bold; font-size: 25pt;">Likelihood of Fire, Take Precaution</p> <!-- Updated result text -->
+                <p class="cool-yes" id="mlout" style="color: black; font-weight: bold; font-size: 25pt;">N/A</p> <!-- Updated result text -->
             </div>
         </div>
     </div>
     <footer class="py-3 my-4">
         <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-          <li class="nav-item"><a href="./solution.html" class="nav-link px-2 text-body-secondary">Home</a></li>
-          <li class="nav-item"><a href="./features.html" class="nav-link px-2 text-body-secondary">Product</a></li>
-          <li class="nav-item"><a href="./aboutus.html" class="nav-link px-2 text-body-secondary">About</a></li>
-          <li class="nav-item"><a href="./tryme.html" class="nav-link px-2 text-body-secondary">AI MODEL</a></li>
+          <li class="nav-item"><a href="./solution.html" class="nav-link px-2 text-body-secondary"><span style="color : black;">Home</span></a></li>
+          <li class="nav-item"><a href="./features.html" class="nav-link px-2 text-body-secondary"><span style="color : black;">Products</span></a></li>
+          <li class="nav-item"><a href="./tryme.html" class="nav-link px-2 text-body-secondary"><span style="color : black;">AI Model</span></a></li>
+          <li class="nav-item"><a href="./testai.html" class="nav-link px-2 text-body-secondary"><span style="color : black;">Documentation</span></a></li>
+
+        
         </ul>
-        <p class="text-center text-body-secondary">© 2023 Flame AI, Inc</p>
+        <p class="text-center text-body-secondary"><span style="color : black;">© 2024 Flame AI, Inc</span></p>
       </footer>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

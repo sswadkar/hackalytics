@@ -5,6 +5,7 @@ import numpy as np
 from flask import Flask, request, render_template, jsonify
 from flask_socketio import SocketIO, emit
 from joblib import load
+import json
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -13,16 +14,16 @@ model = load("smoke_detection.joblib")
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    temperature = float(request.args.get("temperature"))
-    humidity = float(request.args.get("humidity"))
-    voc = float(request.args.get("voc"))
-    co2 = float(request.args.get("co2"))
-    airhpa = float(request.args.get("airhpa"))
-    hydrogen = float(request.args.get("hydrogen"))
+    temperature = float(request.form.get("temperature"))
+    humidity = float(request.form.get("humidity"))
+    voc = float(request.form.get("voc"))
+    co2 = float(request.form.get("co2"))
+    airhpa = float(request.form.get("airhpa"))
+    hydrogen = float(request.form.get("hydrogen"))
 
     data = [[temperature, humidity, voc, co2, hydrogen,
-        1.99060e+04, airhpa, 2.40000e-01, 2.50000e-01, 1.66000e+00,
-        2.58000e-01, 6.00000e-03, 9.46000e+02]]
+        19501.0, airhpa, 1.81, 1.88, 12.45,
+        1.943, 0.044, 9336.0]]
     
     # 20.13
     # 50.15
@@ -42,6 +43,12 @@ def predict():
     out = {"output": int(model.predict(data)[0])}
     return jsonify(out)
 
+@app.route("/imageclassifier", methods=["GET"])
+def classify():
+    with open("../flask/yolov5/output.json") as json_file:
+        data = json.load(json_file)
+    return jsonify(data)
+
 @app.route("/tryme.html", methods=["GET"])
 def tryme():
     return render_template(
@@ -52,7 +59,7 @@ def tryme():
 @app.route("/", methods=["GET"])
 def index():
     return render_template(
-        "index.html",
+        "solution.html",
         title="Home",
     )
 @app.route("/solution.html", methods=["GET"])
@@ -61,11 +68,11 @@ def solution():
         "solution.html",
         title="Home",
     )
-@app.route("/aboutus.html", methods=["GET"])
-def aboutus():
+@app.route("/testai.html", methods=["GET"])
+def testai():
     return render_template(
-        "aboutus.html",
-        title="About us",
+        "testai.html",
+        title = "Documentation"
     )
 @app.route("/features.html", methods=["GET"])
 def features():
