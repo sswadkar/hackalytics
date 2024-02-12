@@ -102,7 +102,7 @@ def test_connect():
 
 @socketio.on("image")
 def receive_image(image):
-    image = cv2.imread("../flask/output.png")
+    image = cv2.imread("../imageprocessing/output.png")
 
     frame_resized = cv2.resize(image, (640, 360))
 
