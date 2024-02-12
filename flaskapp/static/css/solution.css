@@ -1,0 +1,81 @@
+.gradient-background {
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 30%, rgba(83,30,8,1) 56%, rgba(249,105,0,1) 100%);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.carousel-item active{
+  animation-name: fader;
+  animation-name: fader;
+}
+.carousel-item{
+  animation-name: fader;
+  animation-name: fader;
+}
+@keyframes fader {
+  from { opacity: 1.0; }
+  to   { opacity: 0.0; }
+}
+
+.icon-square {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+}
+
+.profile-img {
+  border-radius: 50%;
+  height: 50px;
+}
+
+h1{
+  text-emphasis-color: white;
+}
+.carousel
+{
+  padding-top: 10px;
+  height: 65vh;
+
+}
+#title
+{
+  height:90vh;
+}
+.white{
+  color:white;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 10px;
+} 
+
+#aaa
+{
+  padding-top: 10px;
+}
+
+.Divider {
+  height:15vh;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 30%, rgba(83,30,8,1) 56%, rgba(249,105,0,1) 100%);
+  background-size: 180% 180%;
+  animation: gradient-animation 18s ease infinite;
+}

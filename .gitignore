@@ -160,6 +160,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-flask/yolov5/
-flask/yolov5s.pt
-flask/yolov5x6.pt
+imageprocessing/curframe.png
+imageprocessing/output.png
+flaskapp/venv/
+
+imageprocessing/yolov5/
+imageprocessing/__pycache__/
+imageprocessing/venv/
