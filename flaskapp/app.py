@@ -11,7 +11,6 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 model = load("smoke_detection.joblib")
 
-
 @app.route("/predict", methods=["POST"])
 def predict():
     temperature = float(request.form.get("temperature"))

@@ -160,10 +160,10 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-imageprocessing/curframe.png
-imageprocessing/output.png
 flaskapp/venv/
 
+imageprocessing/curframe.png
+imageprocessing/output.png
 imageprocessing/yolov5/
 imageprocessing/__pycache__/
 imageprocessing/venv/
