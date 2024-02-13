@@ -2,6 +2,8 @@
 
 Flame AI is an advanced early fire detection system designed to revolutionize safety protocols by leveraging cutting-edge technology. It swiftly notifies first responders and administrators of fire outbreaks, provides crucial data on surrounding populations for optimal resource allocation, and enables swift rescue operations.
 
+![rsz_demo](https://github.com/sswadkar/hackalytics/assets/63820563/0178dc9f-5538-4703-8a33-fe5bb6baf7a3)
+
 ## Inspiration
 
 Inspired by a personal story of a team member affected by a factory fire, we delved into the limitations of existing smoke detectors. Our research highlighted the need for a system that not only detects fires early but also provides actionable data to responders, making Flame AI a necessary innovation in fire safety.
